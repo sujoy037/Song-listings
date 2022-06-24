@@ -1,0 +1,11 @@
+1.Top 10 Artist:select table1.name as song_name,table1.song_id,
+table1.a_id,max(rating),artist.name,artist.artist_id from 
+(select s.name,s.song_id,s.artist_id as a_id,max(r.value) as rating from song s join rating r where s.song_id=r.song_id group by song_id desc)
+ as table1 left join artist on artist.artist_id=table1.a_id group by artist_id desc limit 10
+2.Top 10 Song:SELECT s.song_id,s.date_of_rel, s.img as cover, s.name, s.artist_id, a.dob, a.name as artist,  (select avg (r.value) from rating r where r.song_id = s.song_id ) as rating
+        FROM song s
+        join artist a
+        on a.artist_id = s.artist_id
+        order by (select avg (r.value) from rating r where r.song_id = s.song_id) desc
+        limit 10
+3.Logon:SELECT * FROM user where email=? and password=?        
